@@ -1,4 +1,5 @@
 import {
+    CardFactory,
     MessageFactory,
     InputHints,
 } from 'botbuilder';
@@ -8,6 +9,7 @@ import {
     ChoiceFactory,
     DialogTurnResult,
     ChoicePrompt,
+    ListStyle,
     DialogSet,
     DialogTurnStatus,
     TextPrompt,
@@ -74,7 +76,7 @@ export default class CarSeatDialog extends ComponentDialog {
         }
     }
 
-    async transportStep(stepContext) {
+    async transportStep(stepContext: WaterfallStepContext) {
         console.log('CarSeatDialog.transportStep');
 
         return await stepContext.prompt(TRANSPORT_CHOICE_PROMPT, {
@@ -94,7 +96,8 @@ export default class CarSeatDialog extends ComponentDialog {
                 'Cars with tight back space', 
                 'Need to fit more than 2 children in a row in the future', 
                 'Extra space'
-            ])
+            ]),
+            style: ListStyle.suggestedAction
         });
     }
 
@@ -104,6 +107,7 @@ export default class CarSeatDialog extends ComponentDialog {
 
             const messageText = 'Do you have a stroller selected, or do you have a hand-me-down stroller?'
             const msg = MessageFactory.text(messageText, messageText, InputHints.ExpectingInput);
+
             return await stepContext.prompt(STROLLER_TEXT_PROMPT, { prompt: msg });
     }
 
@@ -117,7 +121,8 @@ export default class CarSeatDialog extends ComponentDialog {
                 'Compact & lightweight',
                 'Extra safety features',
                 'Quality & Comfort',
-            ])
+            ]),
+            style: ListStyle.suggestedAction
         });
 
 
